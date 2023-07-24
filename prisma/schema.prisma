@@ -18,7 +18,8 @@ model User{
   role Role @default(BASIC)
   writtenPosts Post[] @relation("WrittenPosts")
   favouritePosts Post[]  @relation("FavouritePosts")
-  userPreferance UserPreferance?
+  userPreferance UserPreferance? @relation(fields: [userPreferanceId],references: [id])
+  userPreferanceId String? @unique
 
   @@unique([age,name])
   @@index([email])
@@ -27,8 +28,7 @@ model User{
 model UserPreferance{
   id String @id @default(uuid())
   emailUpdates Boolean
-  user User  @relation(fields: [userId],references: [id])
-  userId  String  @unique
+  user User?   
 }
 
 model Post{
